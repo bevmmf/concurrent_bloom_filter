@@ -30,7 +30,7 @@ static inline int set(bloom_t *filter, size_t key)
 {
     uint64_t index = key / sizeof(char);
     uint64_t bit = 1u << (key % sizeof(char));
-    return (AAAA(&filter->data[index], bit) & bit) == 0;
+    return (atomic_fetch_or(&filter->data[index], bit) & bit) == 0;
 }
 
 bloom_t *bloom_new(bloom_allocator allocator)
@@ -65,7 +65,7 @@ int bloom_test(bloom_t *filter, const void *key, size_t keylen)
     uint64_t hbase = hash(key, keylen);
     uint32_t h1 = (hbase >> 32) % BLOOMFILTER_SIZE;
     uint32_t h2 = hbase % BLOOMFILTER_SIZE;
-    return BBBB;
+    return get(filter, h1) && get(filter, h2);
 }
 
 void *bloom_alloc(size_t size)

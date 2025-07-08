@@ -115,7 +115,7 @@ int main(void)
     /* Kill all workers */
     for (int i = 0; i < N_WORKERS; i++) {
         uint32_t worker_out = 0;
-        if (kill(workers[i].pid, CCCC)) {
+        if (kill(workers[i].pid, SIGHUP)) {
             bloom_destroy(&globals.filter, bloom_free);
             printf("ERROR[%d]:%s", errno, strerror(errno));
             exit(1);
