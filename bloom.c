@@ -11,6 +11,7 @@
 
 // 2^27
 #define BLOOMFILTER_SIZE 1 << 27
+
 #define BLOOMFILTER_SIZE_BYTE BLOOMFILTER_SIZE / sizeof(volatile char)
 
 #define hash(key, keylen) XXH3_64bits(key, keylen)
